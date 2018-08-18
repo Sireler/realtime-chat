@@ -42,4 +42,22 @@ class ChatController extends Controller
 
         ]);
     }
+
+    public function postMessage(Request $request)
+    {
+        $data = $request->all();
+
+        $message = Message::create([
+            'from_id' => Auth::user()->id,
+            'to_id' => $data['to_id'],
+            'content' => $data['content']
+        ]);
+
+        $message->load('fromUser');
+
+        return response()->json([
+            'content' => $message->content,
+            'created_at' => $message->created_at->format('jS F Y H:i')
+        ]);
+    }
 }
