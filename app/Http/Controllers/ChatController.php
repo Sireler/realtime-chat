@@ -16,7 +16,6 @@ class ChatController extends Controller
 
     public function index(Request $request)
     {
-
         if (! $request->has('to')) {
             return redirect()->route('chat', ['to' => 1]);
         }
