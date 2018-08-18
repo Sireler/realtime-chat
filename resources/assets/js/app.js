@@ -6,6 +6,7 @@
  */
 
 require('./bootstrap');
+import * as io from 'socket.io-client'
 
 // window.Vue = require('vue');
 

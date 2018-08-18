@@ -16,15 +16,21 @@ class ChatController extends Controller
 
     public function index(Request $request)
     {
+
+        if (! $request->has('to')) {
+            return redirect()->route('chat', ['to' => 1]);
+        }
+
         $users = User::all();
 
-        $toUserId = $request->get('to');
         $fromUserId = Auth::user()->id;
+
+        $userTo = User::find($request->get('to'));
 
         $messages = Message::with(['toUser', 'fromUser'])
             ->where('from_id', $fromUserId)
-            ->where('to_id', $toUserId)
-            ->orWhere('from_id', $toUserId)
+            ->where('to_id', $userTo->id)
+            ->orWhere('from_id', $userTo->id)
             ->where('to_id', $fromUserId)
             ->latest('created_at')
             ->limit(5)
@@ -33,7 +39,7 @@ class ChatController extends Controller
         return view('chat', [
             'users' => $users,
             'messages' => $messages,
-            'to' => $toUserId,
+            'userTo' => $userTo
 
         ]);
     }
