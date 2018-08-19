@@ -16,4 +16,4 @@ redis.on('pmessage', function (pattern, channel, message) {
         }});
 
     console.log(channel, message)
-})
+});

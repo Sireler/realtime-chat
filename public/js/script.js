@@ -73,5 +73,4 @@ socket.on('chat-' + myId +':message', function (data) {
         Notify.generate(data.message.content, '<img style="width: 24px; height: 24px; margin-right: 10px;" src="'+ data.message.from_user.avatar +'">' + 'Message from ' + data.message.from_user.name + ':', 0);
     }
 
-
 });
