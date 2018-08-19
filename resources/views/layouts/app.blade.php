@@ -83,5 +83,7 @@
             @yield('content')
         </main>
     </div>
+    <script src="{{ asset('js/socket.io.dev.js') }}"></script>
+    <script src="{{ asset('js/script.js') }}"></script>
 </body>
 </html>

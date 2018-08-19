@@ -78,7 +78,7 @@
     </div>
     </div>
     <script>
-        var myId = "{{ Auth::user()->id }}"
+        var myId = "{{ Auth::user()->id }}";
 
         var params = window
             .location

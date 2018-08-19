@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\MessageSent;
 use App\User;
 use App\Message;
 use Illuminate\Http\Request;
@@ -54,6 +55,10 @@ class ChatController extends Controller
         ]);
 
         $message->load('fromUser');
+
+        event(
+            new MessageSent($message)
+        );
 
         return response()->json([
             'content' => $message->content,
