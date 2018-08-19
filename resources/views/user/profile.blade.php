@@ -15,7 +15,7 @@
                                 {{ session()->get('avatar_status') }}
                             </div>
                         @endif
-                        <img style="width: 200px; height: 200px" src="{{ $user->avatar }}" alt="">
+                        <img style="width: 200px; height: 200px; margin-bottom: 15px;" src="{{ $user->avatar }}" alt="">
                         <form enctype="multipart/form-data" method="POST" action="{{ route('changeAvatar') }}" class="form">
                             @csrf
                             <div class="custom-file">

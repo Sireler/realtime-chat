@@ -47,7 +47,7 @@ class UserController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'avatar' => 'required|image',
+            'avatar' => 'required|image|mimes:jpg,png,jpeg',
         ]);
     }
 }
