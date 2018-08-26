@@ -14,6 +14,11 @@ class UserController extends Controller
         $this->middleware('auth');
     }
 
+    /**
+     * Show profile page
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function profile()
     {
         $user = Auth::user();
@@ -21,6 +26,11 @@ class UserController extends Controller
         return view('user.profile', compact("user"));
     }
 
+    /**
+     * User info
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function getUserInfo()
     {
         $user = Auth::user();
@@ -30,6 +40,12 @@ class UserController extends Controller
         ]);
     }
 
+    /**
+     * Upload avatar
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function changeAvatar(Request $request)
     {
         $user = $request->user();
@@ -53,6 +69,12 @@ class UserController extends Controller
         return redirect()->back();
     }
 
+    /**
+     * Validator
+     *
+     * @param array $data
+     * @return \Illuminate\Contracts\Validation\Validator
+     */
     protected function validator(array $data)
     {
         return Validator::make($data, [
