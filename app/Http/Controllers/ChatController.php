@@ -65,4 +65,27 @@ class ChatController extends Controller
             'created_at' => $message->created_at->format('jS F Y H:i')
         ]);
     }
+
+    public function loadMessages(Request $request)
+    {
+        $data = $request->all();
+
+        $messages = Message::with(['toUser', 'fromUser'])
+            ->where('from_id', $data['from'])
+            ->where('to_id', $data['to'])
+            ->orWhere('from_id', $data['to'])
+            ->where('to_id', $data['from'])
+            ->latest('created_at')
+            ->offset($data['offs'])
+            ->limit(5)
+            ->get();
+
+        foreach ($messages as $message) {
+            $message->formated_date = $message->created_at->format('jS F Y H:i');
+        }
+
+        return response()->json([
+            'messages' => $messages
+        ]);
+    }
 }

@@ -1,5 +1,7 @@
 var socket = io(':6001');
 
+var offsetMsg = 5;
+
 Notify = {
     TYPE_INFO: 0,
     TYPE_SUCCESS: 1,
@@ -28,6 +30,66 @@ Notify = {
         lNotify_e.appendTo($("#notifies"));
     }
 };
+
+document.addEventListener("DOMContentLoaded", function(event) {
+    var loading = false;
+
+    var scrollD = 480;
+    var scrolling = 106;
+
+    $('.chat_area.scroll').scroll(function(e) {
+        if (!loading && ($(this).scrollTop() >= scrolling)) {
+            loading = true;
+
+            $.get('/chat/load', {to: params['to'], from: myId, offs: offsetMsg}, function(data) {
+                if (data.messages) {
+                    data.messages.forEach(function(message) {
+
+                        let container = $('.chat_area ul');
+
+                        let msg = $('<li class="left clearfix">');
+
+                        let msgImg = $('<span class="chat-img1 float-left">');
+
+                        let msgImgContent = "";
+
+                        if (myId == message.from_id) {
+                            msgImgContent = $('#currUserAvatar').clone().addClass('to').attr('id', '');
+                        } else {
+                            msgImgContent = $('#chat-to-user-avatar').clone().addClass('from').attr('id', '');
+                        }
+
+                        let msgBody = $('<div class="chat-body1 clearfix">');
+
+                        let msgBodyText = "";
+
+                        if (myId == message.from_id) {
+                            msgBodyText = $('<p class="rounded me">').text(message.content);
+                        } else {
+                            msgBodyText = $('<p class="rounded">').text(message.content);
+                        }
+
+                        let msgBodyTime = $('<div class="chat_time float-right">').text(message.formated_date);
+
+                        container.append(
+                          msg.append(
+                              msgImg.append(msgImgContent)
+                          ).append(
+                              msgBody.append(msgBodyText)
+                                  .append(msgBodyTime)
+                          )
+                        );
+
+                    });
+                    loading = false;
+                    offsetMsg += 5;
+                    scrolling += scrollD;
+
+                }
+            });
+        }
+    });
+});
 
 var params = window
     .location
@@ -91,6 +153,7 @@ function sendMessage() {
 
         $.post(postURL, obj, function(data) {
             html.time.text(data.created_at);
+            offsetMsg++;
         });
     }
 }
@@ -116,6 +179,8 @@ socket.on('chat-' + myId +':message', function (data) {
         var p = $('<p class="rounded">');
         var span = $('<span class="chat-img1 float-left">').append($('#chat-to-user-avatar').clone());
         var li = $('<li class="left clearfix">').append(span).append(body.append(p.text(data.message.content)).append(strDate));
+
+        offsetMsg++;
 
         $('ul.list-unstyled').prepend(li);
     } else {
