@@ -29,14 +29,6 @@ Notify = {
     }
 };
 
-var myId = "";
-
-document.addEventListener("DOMContentLoaded", function(event) {
-    $.get('/user/info', function (data) {
-        myId = data;
-    });
-});
-
 var params = window
     .location
     .search
@@ -116,7 +108,6 @@ socket.on('error', function(error) {
     console.warn('Error: ' + error)
 });
 
-
 socket.on('chat-' + myId +':message', function (data) {
 
     if (params['to'] == data.message.from_id) {
@@ -132,3 +123,5 @@ socket.on('chat-' + myId +':message', function (data) {
     }
 
 });
+
+
