@@ -8,6 +8,10 @@ use App\Message;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+/**
+ * Class ChatController
+ * @package App\Http\Controllers
+ */
 class ChatController extends Controller
 {
     public function __construct()
@@ -15,6 +19,12 @@ class ChatController extends Controller
         $this->middleware('auth');
     }
 
+    /**
+     * Show chat page
+     *
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
+     */
     public function index(Request $request)
     {
         if (! $request->has('to')) {
@@ -44,6 +54,12 @@ class ChatController extends Controller
         ]);
     }
 
+    /**
+     * Post message from user and broadcasting
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function postMessage(Request $request)
     {
         $data = $request->all();
@@ -66,6 +82,12 @@ class ChatController extends Controller
         ]);
     }
 
+    /**
+     * Load messages for infinite scrolling
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function loadMessages(Request $request)
     {
         $data = $request->all();
@@ -80,6 +102,7 @@ class ChatController extends Controller
             ->limit(5)
             ->get();
 
+        // date format
         foreach ($messages as $message) {
             $message->formated_date = $message->created_at->format('jS F Y H:i');
         }
