@@ -4,6 +4,7 @@ var io = require('socket.io')(6001),
     request = require('request');
 
 
+// check user auth
 io.use(function(socket, next) {
     request.get({
         url: 'http://realtime/socket/check-auth',
