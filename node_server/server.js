@@ -3,6 +3,17 @@ var io = require('socket.io')(6001),
     redis = new Redis(),
     request = require('request');
 
+
+io.use(function(socket, next) {
+    request.get({
+        url: 'http://realtime/socket/check-auth',
+        headers: {cookie: socket.request.headers.cookie},
+        json: true
+    }, function(error, response, json) {
+        return json.auth ? next() : next(new Error('Auth error'));
+    });
+});
+
 redis.psubscribe('*', function (error, count) {
     // ---
 });

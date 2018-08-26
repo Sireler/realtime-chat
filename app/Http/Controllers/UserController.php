@@ -21,6 +21,15 @@ class UserController extends Controller
         return view('user.profile', compact("user"));
     }
 
+    public function getUserInfo()
+    {
+        $user = Auth::user();
+
+        return response()->json([
+            'id' =>  $user->id
+        ]);
+    }
+
     public function changeAvatar(Request $request)
     {
         $user = $request->user();

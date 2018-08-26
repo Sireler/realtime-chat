@@ -78,73 +78,7 @@
     </div>
     </div>
     <script>
-        var myId = "{{ Auth::user()->id }}";
 
-        var params = window
-            .location
-            .search
-            .replace('?','')
-            .split('&')
-            .reduce(
-                function(p,e){
-                    var a = e.split('=');
-                    p[ decodeURIComponent(a[0])] = decodeURIComponent(a[1]);
-                    return p;
-                },
-                {}
-            );
-
-        function sendMessage() {
-
-            if ($('textarea').val() == '') {
-                $('textarea').focus();
-                return false;
-            }
-
-            var msgData = collectMsgData();
-            var options = htmlMessage(msgData.content);
-
-            sendAjaxData(msgData, options);
-
-
-            $('textarea').val('');
-            $('.no-messages-text').remove();
-
-
-            $('ul.list-unstyled').prepend(
-                options.obj
-            );
-
-            function collectMsgData() {
-                let msg = {
-                    "_token": $('meta[name="csrf-token"]').attr('content'),
-                    "to_id": params['to'],
-                    "content": $('textarea').val()
-                };
-
-                return msg;
-            }
-
-            function htmlMessage(content) {
-                let strDate = $('<div class="chat_time float-right">').text('Waiting...');
-                let body = $('<div class="chat-body1 clearfix">');
-                let p = $('<p class="rounded me">');
-                let span = $('<span class="chat-img1 float-left">').append($($('#currUserAvatar')[0]).clone());
-                let li = $('<li class="left clearfix">')
-                    .append(span)
-                    .append(body.append(p.text(content)).append(strDate));
-
-                return {obj: li, time: strDate};
-            }
-
-            function sendAjaxData(obj, html) {
-                let postURL = window.location.href.replace(window.location.search, '');
-
-                $.post(postURL, obj, function(data) {
-                    html.time.text(data.created_at);
-                });
-            }
-        }
 
     </script>
 

@@ -23,4 +23,7 @@ Route::get('/chat', 'ChatController@index')->name('chat');
 Route::post('/chat', 'ChatController@postMessage')->name('sendMessage');
 
 Route::get('/profile', 'UserController@profile')->name('profile');
+Route::get('/user/info', 'UserController@getUserInfo');
 Route::post('/profile/avatar', 'UserController@changeAvatar')->name('changeAvatar');
+
+Route::get('/socket/check-auth', 'SocketController@checkAuth')->name('socket.check_auth');
