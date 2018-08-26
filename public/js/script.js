@@ -1,7 +1,9 @@
 var socket = io(':6001');
 
+// offset for ajax request
 var offsetMsg = 5;
 
+// notifies
 Notify = {
     TYPE_INFO: 0,
     TYPE_SUCCESS: 1,
@@ -31,6 +33,7 @@ Notify = {
     }
 };
 
+// infinite scroll for messages
 document.addEventListener("DOMContentLoaded", function(event) {
     var loading = false;
 
@@ -91,6 +94,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
     });
 });
 
+// uri params
 var params = window
     .location
     .search
@@ -171,6 +175,7 @@ socket.on('error', function(error) {
     console.warn('Error: ' + error)
 });
 
+// listen channel for messages
 socket.on('chat-' + myId +':message', function (data) {
 
     if (params['to'] == data.message.from_id) {
@@ -183,7 +188,9 @@ socket.on('chat-' + myId +':message', function (data) {
         offsetMsg++;
 
         $('ul.list-unstyled').prepend(li);
+
     } else {
+        // show notify
         Notify.generate(data.message.content, '<img style="width: 24px; height: 24px; margin-right: 10px;" src="'+ data.message.from_user.avatar +'">' + 'Message from ' + data.message.from_user.name + ':', 0);
     }
 
