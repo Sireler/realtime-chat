@@ -178,6 +178,8 @@ socket.on('error', function(error) {
 // listen channel for messages
 socket.on('chat-' + myId +':message', function (data) {
 
+    if (data.message.from_id == data.message.to_id) return;
+
     if (params['to'] == data.message.from_id) {
         var strDate = $('<div class="chat_time float-right">').text(data.date);
         var body = $('<div class="chat-body1 clearfix">');
