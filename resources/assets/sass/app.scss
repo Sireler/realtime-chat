@@ -9,8 +9,28 @@
 @import '~bootstrap/scss/bootstrap';
 
 .navbar-laravel {
-  background-color: #fff;
+  background-color: #4794ff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+a.chat-link {
+  color: #fff !important;
+}
+
+.dialog-item:hover {
+  background: rgba(71, 148, 255, 0.4);
+  cursor: pointer;
+
+  box-shadow:
+          1px 1px #4794FF,
+          2px 2px #4794FF,
+          3px 3px #4794FF,
+          4px 4px #4794FF,
+          5px 5px #4794FF,
+          6px 6px #4794FF,
+          7px 7px #4794FF;
+  -webkit-transform: translateX(-7px);
+  transform: translateX(-7px);
 }
 
 #notifies {

@@ -21,7 +21,7 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 @foreach($dialogs as $dialog)
-                    <div class="alert alert-light">
+                    <div class="alert alert-light dialog-item">
                         <img style="width: 32px; height: 32px; margin-right: 10px;" src="{{ asset($dialog->avatar) }}" alt="" class="rounded-circle">
                         <a href="{{ url('/chat?to=' . $dialog->id) }}">{{ $dialog->name }}</a>
                     </div>
