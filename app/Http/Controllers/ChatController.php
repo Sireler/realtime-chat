@@ -7,6 +7,8 @@ use App\User;
 use App\Message;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+
 
 /**
  * Class ChatController
@@ -27,15 +29,27 @@ class ChatController extends Controller
      */
     public function index(Request $request)
     {
+        $fromUserId = Auth::user()->id;
+
         if (! $request->has('to')) {
-            return redirect()->route('chat', ['to' => 1]);
+
+            // Last messages for user
+            $listUsers = Message::where('from_id', $fromUserId)
+                ->orWhere('to_id', $fromUserId)
+                ->orderBy('id', 'desc')
+                ->distinct()
+                ->get(['from_id', 'to_id']);
+
+            $dialogs = $this->getLastUserMessages();
+
+            return view('chat', [
+                'dialogs' => $dialogs
+            ]);
         }
 
         $users = User::all();
 
-        $fromUserId = Auth::user()->id;
-
-        $userTo = User::find($request->get('to'));
+        $userTo = User::findOrFail($request->get('to'));
 
         $messages = Message::with(['toUser', 'fromUser'])
             ->where('from_id', $fromUserId)
@@ -110,5 +124,24 @@ class ChatController extends Controller
         return response()->json([
             'messages' => $messages
         ]);
+    }
+
+    protected function getLastUserMessages()
+    {
+        $currentUserId = Auth::user()->id;
+        $listUsers = DB::select("select distinct from_id, to_id FROM messages where from_id = {$currentUserId} or to_id = {$currentUserId} order by id desc");
+        $lastIds = [];
+
+        foreach ($listUsers as $arr) {
+            array_push($lastIds, $arr->to_id);
+            array_push($lastIds, $arr->from_id);
+        }
+
+        $lastIds = array_unique($lastIds);
+
+        $msg = User::whereIn('id', $lastIds)
+            ->get();
+
+        return $msg;
     }
 }

@@ -5,16 +5,53 @@
         <div id="notifies"></div>
 
         <div class="row justify-content-center">
-            <div class="col-2">
-                <ul class="list-group">
-                    @foreach ($users as $user)
-                        <li class="list-group-item">
-                            <a href="{{ route('chat', ['to' => $user->id]) }}">{{ $user->name }}</a>
-                        </li>
-                    @endforeach
-                </ul>
+            <div class="col-md-8">
+                <form class="form align-items-center" method="GET" action="{{ url('/chat') }}">
+                    <div class="input-group mb-3">
+                        <input name="to" type="text" class="form-control" placeholder="Find user by username" aria-label="Find user by username" aria-describedby="basic-addon2">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" type="submit">Search</button>
+                        </div>
+                    </div>
+                </form>
             </div>
+        </div>
+
+        @if (!request('to'))
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                @foreach($dialogs as $dialog)
+                    <div class="alert alert-light">
+                        <img style="width: 32px; height: 32px; margin-right: 10px;" src="{{ asset($dialog->avatar) }}" alt="" class="rounded-circle">
+                        <a href="{{ url('/chat?to=' . $dialog->id) }}">{{ $dialog->name }}</a>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+        @endif
+
+        @if (request('to'))
+        <div class="row justify-content-center">
+            {{--<div class="col-2">--}}
+                {{--<ul class="list-group">--}}
+                    {{--@foreach ($users as $user)--}}
+                        {{--<li class="list-group-item">--}}
+                            {{--<a href="{{ route('chat', ['to' => $user->id]) }}">{{ $user->name }}</a>--}}
+                        {{--</li>--}}
+                    {{--@endforeach--}}
+                {{--</ul>--}}
+            {{--</div>--}}
+
             <div class="col-8">
+                <div class="row">
+                    <div class="col-2">
+                        <div class="alert-info alert">
+                            <a href="{{ url('/chat') }}">Back</a>
+                        </div>
+                    </div>
+                </div>
+
+
                 <div class="card">
                     <div class="card-header">
                         <h3>Chat</h3>
@@ -60,6 +97,7 @@
                                 @endforeach
                             </ul>
                         </div>
+
                         <div class="message_write">
 
                             <input id="to_id" hidden type="text" name="to_id" value="{{ $userTo->id }}">
@@ -75,6 +113,7 @@
                 </div>
             </div>
         </div>
+        @endif
     </div>
     </div>
     <script>
