@@ -23,6 +23,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/chat', 'ChatController@index')->name('chat');
 Route::post('/chat', 'ChatController@postMessage')->name('sendMessage');
 Route::get('/chat/load', 'ChatController@loadMessages');
+Route::get('/find', 'ChatController@findUser');
 
 // User
 Route::get('/profile', 'UserController@profile')->name('profile');

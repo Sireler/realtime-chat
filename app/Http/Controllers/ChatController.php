@@ -126,6 +126,35 @@ class ChatController extends Controller
         ]);
     }
 
+    /**
+     *  Find user by name and show page
+     *
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
+     */
+    public function findUser(Request $request)
+    {
+        if ($request->get('to')) {
+
+            $user = User::where('name', $request->get('to'))->get();
+
+            if ($user->isEmpty()) {
+                session()->flash("find_status_not", "User {$request->to} not found");
+            } else {
+                session()->flash("find_status_found", "Try send a message to {$request->to}");
+            }
+
+            return view('find', compact('user'));
+        }
+
+        return redirect()->to('/chat');
+    }
+
+    /**
+     *  Return users who wrote to current user
+     *
+     * @return mixed
+     */
     protected function getLastUserMessages()
     {
         $currentUserId = Auth::user()->id;

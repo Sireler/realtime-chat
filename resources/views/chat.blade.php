@@ -6,7 +6,7 @@
 
         <div class="row justify-content-center">
             <div class="col-md-8">
-                <form class="form align-items-center" method="GET" action="{{ url('/chat') }}">
+                <form class="form align-items-center" method="GET" action="{{ url('/find') }}">
                     <div class="input-group mb-3">
                         <input name="to" type="text" class="form-control" placeholder="Find user by username" aria-label="Find user by username" aria-describedby="basic-addon2">
                         <div class="input-group-append">
@@ -46,7 +46,7 @@
                 <div class="row">
                     <div class="col-2">
                         <div class="alert-info alert">
-                            <a href="{{ url('/chat') }}">Back</a>
+                            <a href="{{ url('/chat') }}">Dialogs</a>
                         </div>
                     </div>
                 </div>
