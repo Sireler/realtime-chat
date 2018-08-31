@@ -16,8 +16,12 @@
             </div>
         </div>
 
+
         <div class="row justify-content-center">
             <div class="col-md-8">
+                <div class="row">
+                    @include('layouts.menu_buttons')
+                </div>
                 <div class="card">
                     <div class="card-body">
                         @if(session('find_status_not'))

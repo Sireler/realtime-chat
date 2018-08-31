@@ -32,23 +32,10 @@
 
         @if (request('to'))
         <div class="row justify-content-center">
-            {{--<div class="col-2">--}}
-                {{--<ul class="list-group">--}}
-                    {{--@foreach ($users as $user)--}}
-                        {{--<li class="list-group-item">--}}
-                            {{--<a href="{{ route('chat', ['to' => $user->id]) }}">{{ $user->name }}</a>--}}
-                        {{--</li>--}}
-                    {{--@endforeach--}}
-                {{--</ul>--}}
-            {{--</div>--}}
 
             <div class="col-8">
                 <div class="row">
-                    <div class="col-2">
-                        <div class="alert-info alert">
-                            <a href="{{ url('/chat') }}">Dialogs</a>
-                        </div>
-                    </div>
+                    @include('layouts.menu_buttons')
                 </div>
 
 
