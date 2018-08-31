@@ -131,6 +131,8 @@ function sendMessage() {
         options.obj
     );
 
+    $('.chat_area.scroll').scrollTop(0);
+
     function collectMsgData() {
         let msg = {
             "_token": $('meta[name="csrf-token"]').attr('content'),
