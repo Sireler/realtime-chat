@@ -2,7 +2,6 @@
 
 @section('content')
     <div class="content">
-        <div id="notifies"></div>
 
         <div class="row justify-content-center">
             <div class="col-md-8">
@@ -20,6 +19,14 @@
         @if (!request('to'))
         <div class="row justify-content-center">
             <div class="col-md-8">
+                @if($dialogs->isEmpty())
+                    <div class="row justify-content-center">
+                        <div class="col-8 alert alert-info">
+                            Here are your last dialogs
+                        </div>
+                    </div>
+
+                @endif
                 @foreach($dialogs as $dialog)
                     <div class="alert alert-light dialog-item">
                         <img style="width: 32px; height: 32px; margin-right: 10px;" src="{{ asset($dialog->avatar) }}" alt="" class="rounded-circle">
@@ -104,7 +111,7 @@
     </div>
     </div>
     <script>
-        var myId = "{{ Auth::user()->id }}";
+
     </script>
 
 @endsection

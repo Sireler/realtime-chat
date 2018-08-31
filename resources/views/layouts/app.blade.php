@@ -80,6 +80,7 @@
         </nav>
 
         <main class="py-4">
+            <div id="notifies"></div>
             @yield('content')
         </main>
     </div>

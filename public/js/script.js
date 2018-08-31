@@ -2,6 +2,7 @@ var socket = io(':6001');
 
 // offset for ajax request
 var offsetMsg = 5;
+var myId = "";
 
 // notifies
 Notify = {
@@ -162,7 +163,44 @@ function sendMessage() {
     }
 }
 
+// send get request to url
+// and handle with callback
+function getRequest(url, callback) {
+
+    $.get(url, function(data) {
+        callback(data);
+    });
+
+}
+
 socket.on('connect', function() {
+
+    // get userid and listen chat messages
+    getRequest('/user/info', function(response) {
+        socket.on('chat-' + response.id +':message', function (data) {
+
+            if (data.message.from_id == data.message.to_id) return;
+
+            if (params['to'] == data.message.from_id) {
+                var strDate = $('<div class="chat_time float-right">').text(data.date);
+                var body = $('<div class="chat-body1 clearfix">');
+                var p = $('<p class="rounded">');
+                var span = $('<span class="chat-img1 float-left">').append($('#chat-to-user-avatar').clone());
+                var li = $('<li class="left clearfix">').append(span).append(body.append(p.text(data.message.content)).append(strDate));
+
+                offsetMsg++;
+
+                $('ul.list-unstyled').prepend(li);
+
+            } else {
+                // show notify
+                Notify.generate(data.message.content, '<img style="width: 24px; height: 24px; margin-right: 10px;" src="'+ data.message.from_user.avatar +'">' + 'Message from ' + data.message.from_user.name + ':', 0);
+            }
+
+        });
+    });
+
+
 
 });
 
@@ -176,26 +214,5 @@ socket.on('error', function(error) {
 });
 
 // listen channel for messages
-socket.on('chat-' + myId +':message', function (data) {
-
-    if (data.message.from_id == data.message.to_id) return;
-
-    if (params['to'] == data.message.from_id) {
-        var strDate = $('<div class="chat_time float-right">').text(data.date);
-        var body = $('<div class="chat-body1 clearfix">');
-        var p = $('<p class="rounded">');
-        var span = $('<span class="chat-img1 float-left">').append($('#chat-to-user-avatar').clone());
-        var li = $('<li class="left clearfix">').append(span).append(body.append(p.text(data.message.content)).append(strDate));
-
-        offsetMsg++;
-
-        $('ul.list-unstyled').prepend(li);
-
-    } else {
-        // show notify
-        Notify.generate(data.message.content, '<img style="width: 24px; height: 24px; margin-right: 10px;" src="'+ data.message.from_user.avatar +'">' + 'Message from ' + data.message.from_user.name + ':', 0);
-    }
-
-});
 
 

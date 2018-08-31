@@ -42,6 +42,6 @@
         </div>
     </div>
     <script>
-        var myId = "{{ Auth::user()->id }}";
+
     </script>
 @endsection

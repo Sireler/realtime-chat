@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-    <div id="notifies"></div>
     <div class="content">
 
         <div class="row justify-content-center">
@@ -43,6 +42,6 @@
         </div>
     </div>
     <script>
-        var myId = "{{ Auth::user()->id }}";
+
     </script>
 @endsection
