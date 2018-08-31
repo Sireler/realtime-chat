@@ -43,6 +43,10 @@ function initInfinityMessages(myId) {
 
     $('.chat_area.scroll').scroll(function(e) {
 
+        if ($('.chat_area.scroll').scrollTop() <= 50) {
+            $('b#newMessagesCounter').remove();
+        }
+
         if (!loading && ($(this).scrollTop() >= scrolling)) {
             loading = true;
 
@@ -183,6 +187,8 @@ function getRequest(url, callback) {
 
 }
 
+var newMsgCounter = 0;
+
 socket.on('connect', function() {
 
     // get userid and listen chat messages
@@ -201,6 +207,17 @@ socket.on('connect', function() {
                 offsetMsg++;
 
                 $('ul.list-unstyled').prepend(li);
+
+                if ($('.chat_area.scroll').scrollTop() >= 50) {
+                    newMsgCounter++;
+
+                    if ($('b').is('#newMessagesCounter')) {
+                        ($('#newMessagesCounter').html( '&nbsp;( ' + newMsgCounter + ' )' ));
+                    } else {
+                        $('span.chat-username').append('<b id="newMessagesCounter" style="color: red">&nbsp;( 1 )</b>')
+                    }
+
+                }
 
             } else {
                 // show notify
