@@ -194,7 +194,9 @@ socket.on('connect', function() {
 
             } else {
                 // show notify
-                Notify.generate(data.message.content, '<img style="width: 24px; height: 24px; margin-right: 10px;" src="'+ data.message.from_user.avatar +'">' + 'Message from ' + data.message.from_user.name + ':', 0);
+                Notify.generate('<a href="/chat/?to=' + data.message.from_user.id + '">' + data.message.content +  '</a>',
+                    '<img style="width: 24px; height: 24px; margin-right: 10px;" src="'+ data.message.from_user.avatar +'">' + 'Message from ' + data.message.from_user.name + ':',
+                    0);
             }
 
         });

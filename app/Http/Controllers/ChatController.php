@@ -162,8 +162,8 @@ class ChatController extends Controller
         $lastIds = [];
 
         foreach ($listUsers as $arr) {
-            array_push($lastIds, $arr->to_id);
             array_push($lastIds, $arr->from_id);
+            array_push($lastIds, $arr->to_id);
         }
 
         $lastIds = array_unique($lastIds);
