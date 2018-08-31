@@ -3,8 +3,13 @@
 @section('content')
     <div id="notifies"></div>
     <div class="content">
+
         <div class="row justify-content-center">
+
             <div class="col-md-10">
+                <div class="row">
+                    @include('layouts.menu_buttons')
+                </div>
                 <div class="card">
                     <div class="card-header">
                         <h3>Profile</h3>

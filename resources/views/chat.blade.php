@@ -33,7 +33,7 @@
         @if (request('to'))
         <div class="row justify-content-center">
 
-            <div class="col-8">
+            <div class="col-md-8">
                 <div class="row">
                     @include('layouts.menu_buttons')
                 </div>
