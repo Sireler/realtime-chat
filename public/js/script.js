@@ -35,18 +35,26 @@ Notify = {
 };
 
 // infinite scroll for messages
-document.addEventListener("DOMContentLoaded", function(event) {
+function initInfinityMessages(myId) {
     var loading = false;
 
     var scrollD = 480;
     var scrolling = 106;
 
     $('.chat_area.scroll').scroll(function(e) {
+
         if (!loading && ($(this).scrollTop() >= scrolling)) {
             loading = true;
 
+            // append requesting message
+            var loadingElem = $('ul.list-unstyled').append('<span>Requesting messages...</span>');
+
             $.get('/chat/load', {to: params['to'], from: myId, offs: offsetMsg}, function(data) {
                 if (data.messages) {
+
+                    // remove Requesting message...
+                    loadingElem.children().last().remove();
+
                     data.messages.forEach(function(message) {
 
                         let container = $('.chat_area ul');
@@ -93,7 +101,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
             });
         }
     });
-});
+};
 
 // uri params
 var params = window
@@ -202,6 +210,7 @@ socket.on('connect', function() {
             }
 
         });
+        initInfinityMessages(response.id);
     });
 
 
