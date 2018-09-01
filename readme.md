@@ -10,7 +10,19 @@ $ composer install && npm install
 $ cp .env.example .env
 $ php artisan key:generate
 ```
-Modify `.env` file and run the migrations
+Modify `.env` file 
+
+```.env
+DB_DATABASE=database
+DB_USERNAME=username
+DB_PASSWORD=password
+
+REDIS_HOST=127.0.0.1
+REDIS_PASSWORD=null
+REDIS_PORT=6379
+```
+
+And run the migrations
 
 ```bash
 $ php artisan migrate
