@@ -193,6 +193,7 @@ socket.on('connect', function() {
 
     // get userid and listen chat messages
     getRequest('/user/info', function(response) {
+        // listen channel for messages
         socket.on('chat-' + response.id +':message', function (data) {
 
             if (data.message.from_id == data.message.to_id) return;
@@ -242,7 +243,4 @@ socket.on('connect_error', function(error) {
 socket.on('error', function(error) {
     console.warn('Error: ' + error)
 });
-
-// listen channel for messages
-
 
