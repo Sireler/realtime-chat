@@ -4,13 +4,17 @@ It's a simple chat application.
 ## Installation
 Clone this repository and then
 
-```bash
+```
 $ cd realtime-chat
 $ composer install && npm install
 $ cp .env.example .env
 $ php artisan key:generate
 ```
-Modify `.env` file  
+Modify `.env` file and run the migrations
+
+```
+$ php artisan migrate
+```
 
 ## Run
 ```bash
