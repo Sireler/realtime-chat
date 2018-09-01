@@ -1,5 +1,5 @@
 # realtime-chat
-It's a simple chat application.
+It's a simple chat application with Laravel 5, Redis, node.js, socket.io library;
 
 ## Installation
 Clone this repository and then
