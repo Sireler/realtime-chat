@@ -9,6 +9,7 @@ $ cd realtime-chat
 $ composer install && npm install
 $ cp .env.example .env
 $ php artisan key:generate
+$ php artisan storage:link
 ```
 Modify `.env` file 
 
@@ -21,7 +22,6 @@ REDIS_HOST=127.0.0.1
 REDIS_PASSWORD=null
 REDIS_PORT=6379
 ```
-
 And run the migrations
 
 ```bash
