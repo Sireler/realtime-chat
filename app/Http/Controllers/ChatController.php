@@ -168,6 +168,9 @@ class ChatController extends Controller
 
         $lastIds = array_unique($lastIds);
 
+        // remove current user from array
+        unset($lastIds[array_search($currentUserId, $lastIds)]);
+
         $msg = User::whereIn('id', $lastIds)
             ->get();
 
